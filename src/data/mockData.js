@@ -1,0 +1,137 @@
+export const initialMockData = {
+  stats: {
+    totalRooms: 120,
+    availableRooms: 42,
+    occupiedRooms: 68,
+    maintenanceRooms: 10,
+    totalGuests: 154,
+    todayCheckIns: 18,
+    todayCheckOuts: 12,
+    totalBookings: 348,
+    revenueSummary: {
+      total: 128450,
+      growth: "+14.2%",
+      thisMonth: 48920,
+      pendingPayments: 4650,
+      breakdown: [
+        { month: "May", rooms: 32000, dining: 8400, spa: 4200, total: 44600 },
+        { month: "Jun", rooms: 35000, dining: 9100, spa: 4800, total: 48900 },
+        { month: "Jul", rooms: 41000, dining: 11200, spa: 5900, total: 58100 },
+        { month: "Aug", rooms: 46000, dining: 12800, spa: 6700, total: 65500 },
+        { month: "Sep", rooms: 39000, dining: 10500, spa: 5400, total: 54900 },
+        { month: "Oct", rooms: 44000, dining: 11900, spa: 6100, total: 62000 },
+      ],
+      byRoomType: [
+        { type: "Presidential Suite", revenue: 42500, share: 33, count: 8 },
+        { type: "Ocean Villa", revenue: 38200, share: 30, count: 18 },
+        { type: "Deluxe Suite", revenue: 29400, share: 23, count: 44 },
+        { type: "Executive Room", revenue: 18350, share: 14, count: 50 },
+      ]
+    }
+  },
+  recentBookings: [
+    {
+      id: "BK-8901",
+      guestName: "Lady Sophia Montgomery",
+      guestEmail: "sophia.m@monterey.co.uk",
+      guestAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+      roomNumber: "PH-401",
+      roomType: "Presidential Suite",
+      checkIn: "2026-09-24",
+      checkOut: "2026-09-29",
+      nights: 5,
+      amount: 4250,
+      status: "Confirmed",
+      paymentStatus: "Paid"
+    },
+    {
+      id: "BK-8902",
+      guestName: "David Sterling",
+      guestEmail: "d.sterling@vanguard.io",
+      guestAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+      roomNumber: "OV-104",
+      roomType: "Ocean Villa",
+      checkIn: "2026-09-23",
+      checkOut: "2026-09-27",
+      nights: 4,
+      amount: 2600,
+      status: "Checked In",
+      paymentStatus: "Paid"
+    },
+    {
+      id: "BK-8903",
+      guestName: "Elena Rostova",
+      guestEmail: "elena.rostova@aurora.de",
+      guestAvatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80",
+      roomNumber: "DX-210",
+      roomType: "Deluxe Suite",
+      checkIn: "2026-09-21",
+      checkOut: "2026-09-23",
+      nights: 2,
+      amount: 980,
+      status: "Checked Out",
+      paymentStatus: "Paid"
+    },
+    {
+      id: "BK-8904",
+      guestName: "Marcus Vance",
+      guestEmail: "marcus.vance@techcorp.com",
+      guestAvatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80",
+      roomNumber: "EX-315",
+      roomType: "Executive Room",
+      checkIn: "2026-09-25",
+      checkOut: "2026-09-30",
+      nights: 5,
+      amount: 1450,
+      status: "Pending",
+      paymentStatus: "Pending"
+    },
+    {
+      id: "BK-8905",
+      guestName: "Isabella Cruz",
+      guestEmail: "isabella.cruz@cruzdesign.es",
+      guestAvatar: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=150&auto=format&fit=crop&q=80",
+      roomNumber: "OV-108",
+      roomType: "Ocean Villa",
+      checkIn: "2026-09-23",
+      checkOut: "2026-09-28",
+      nights: 5,
+      amount: 3250,
+      status: "Checked In",
+      paymentStatus: "Paid"
+    },
+    {
+      id: "BK-8906",
+      guestName: "Arthur Pendelton",
+      guestEmail: "arthur@pendelton-holdings.com",
+      guestAvatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80",
+      roomNumber: "PH-402",
+      roomType: "Presidential Suite",
+      checkIn: "2026-09-26",
+      checkOut: "2026-10-02",
+      nights: 6,
+      amount: 5100,
+      status: "Confirmed",
+      paymentStatus: "Paid"
+    },
+    {
+      id: "BK-8907",
+      guestName: "Claire Dupont",
+      guestEmail: "claire.dupont@atelier.fr",
+      guestAvatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80",
+      roomNumber: "DX-212",
+      roomType: "Deluxe Suite",
+      checkIn: "2026-09-23",
+      checkOut: "2026-09-26",
+      nights: 3,
+      amount: 1470,
+      status: "Checked In",
+      paymentStatus: "Paid"
+    }
+  ],
+  notifications: [
+    { id: 1, title: "VIP Arrival Today", text: "Lady Sophia Montgomery arrives at 14:00 (PH-401)", time: "10 mins ago", type: "arrival" },
+    { id: 2, title: "Room Maintenance Completed", text: "Deluxe Suite 208 is now inspected and available", time: "45 mins ago", type: "maintenance" },
+    { id: 3, title: "High Occupancy Alert", text: "Occupancy rate has surpassed 75% for upcoming weekend", time: "2 hrs ago", type: "alert" },
+  ]
+};

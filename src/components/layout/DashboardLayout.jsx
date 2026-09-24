@@ -37,10 +37,10 @@ export default function DashboardLayout({ children }) {
   };
 
   const navItems = [
-    { name: 'Dashboard', icon: LayoutDashboard, path: '/dashboard', active: true },
-    { name: 'Room Management', icon: BedDouble, path: '#', badge: '120' },
-    { name: 'Guest Directory', icon: Users, path: '#', badge: '154' },
-    { name: 'Room Bookings', icon: CalendarCheck, path: '#' },
+    { name: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
+    { name: 'Room Management', icon: BedDouble, path: '/rooms' },
+    { name: 'Guest Directory', icon: Users, path: '/guests' },
+    { name: 'Room Bookings', icon: CalendarCheck, path: '/bookings' },
     { name: 'Check-In / Out', icon: KeyRound, path: '#', badge: '18 arrivals' },
     { name: 'Billing & Payments', icon: CreditCard, path: '#' },
     { name: 'Booking History', icon: History, path: '#' },

@@ -39,7 +39,7 @@ export default function Logo({ className = "", size = "normal" }) {
         <span className="text-[10px] tracking-[0.28em] uppercase font-medium text-[#8C6D3B]">
           Grand
         </span>
-        <span className="text-xl font-serif-luxury font-semibold tracking-wider text-[#3E3224]">
+        <span className="text-xl font-sans font-bold tracking-wider text-[#3E3224]">
           Azure
         </span>
       </div>

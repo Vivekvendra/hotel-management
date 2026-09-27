@@ -8,8 +8,7 @@ import {
   Trash2,
   Eye,
   Users,
-  Layers,
-  CloudDownload
+  Layers
 } from 'lucide-react';
 import { useHotel } from '../../context/HotelContext';
 import Modal from '../../components/common/Modal';
@@ -176,7 +175,7 @@ export default function RoomManagement() {
         <div>
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#8C6D3B]/10 text-[#8C6D3B] text-xs font-semibold uppercase tracking-wider mb-1.5">
             <BedDouble className="w-3.5 h-3.5" />
-            <span>Module 3: Room Inventory</span>
+            <span>Room Inventory</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-serif-luxury font-bold text-stone-900 tracking-tight">
             Room Management
@@ -186,27 +185,13 @@ export default function RoomManagement() {
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2.5">
-          {/* Third-Party API Sync Button */}
-          <button
-            onClick={fetchThirdPartyRooms}
-            disabled={loadingRooms}
-            title="Import/Sync fresh room data from DummyJSON third-party API"
-            className="px-4 py-2.5 rounded-full border border-stone-200 bg-white hover:bg-stone-50 text-stone-700 text-xs font-medium flex items-center gap-2 shadow-2xs transition-colors cursor-pointer disabled:opacity-60"
-          >
-            <CloudDownload className={`w-3.5 h-3.5 text-[#8C6D3B] ${loadingRooms ? 'animate-bounce' : ''}`} />
-            <span>Sync Third-Party API</span>
-          </button>
-
-          {/* Add New Room */}
-          <button
-            onClick={openAddModal}
-            className="px-5 py-2.5 rounded-full bg-[#8C6D3B] hover:bg-[#755B31] text-white text-xs font-semibold tracking-wide flex items-center gap-2 shadow-md transition-all cursor-pointer"
-          >
-            <Plus className="w-4 h-4" />
-            <span>Add New Room</span>
-          </button>
-        </div>
+        <button
+          onClick={openAddModal}
+          className="px-5 py-2.5 rounded-full bg-[#8C6D3B] hover:bg-[#755B31] text-white text-xs font-semibold tracking-wide flex items-center gap-2 shadow-md transition-all cursor-pointer self-start sm:self-auto"
+        >
+          <Plus className="w-4 h-4" />
+          <span>Add New Room</span>
+        </button>
       </div>
 
       {/* Error Notice if API encountered issues */}

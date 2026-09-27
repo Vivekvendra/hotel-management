@@ -17,6 +17,7 @@ import CheckInOut from './pages/checkin/CheckInOut';
 import Payments from './pages/payments/Payments';
 import BookingHistory from './pages/history/BookingHistory';
 import Reports from './pages/reports/Reports';
+import Settings from './pages/settings/Settings';
 
 export default function App() {
   return (
@@ -112,13 +113,25 @@ export default function App() {
               }
             />
 
-            {/* Protected Reports & Analytics (Module 9) */}
+            {/* Protected Reports & Analytics */}
             <Route
               path="/reports"
               element={
                 <ProtectedRoute>
                   <DashboardLayout>
                     <Reports />
+                  </DashboardLayout>
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Protected Hotel Settings */}
+            <Route
+              path="/settings"
+              element={
+                <ProtectedRoute>
+                  <DashboardLayout>
+                    <Settings />
                   </DashboardLayout>
                 </ProtectedRoute>
               }

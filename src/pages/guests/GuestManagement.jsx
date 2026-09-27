@@ -118,7 +118,7 @@ export default function GuestManagement() {
         <div>
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#8C6D3B]/10 text-[#8C6D3B] text-xs font-semibold uppercase tracking-wider mb-1.5">
             <Users className="w-3.5 h-3.5" />
-            <span>Module 4: Patron Dossiers</span>
+            <span>Guest Directory</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-serif-luxury font-bold text-stone-900 tracking-tight">
             Guest Management

@@ -45,7 +45,7 @@ export default function DashboardLayout({ children }) {
     { name: 'Billing & Payments', icon: CreditCard, path: '/payments' },
     { name: 'Booking History', icon: History, path: '/history' },
     { name: 'Reports & Insights', icon: BarChart3, path: '/reports' },
-    { name: 'Hotel Settings', icon: Settings, path: '#' },
+    { name: 'Hotel Settings', icon: Settings, path: '/settings' },
   ];
 
   return (
@@ -79,7 +79,7 @@ export default function DashboardLayout({ children }) {
           {/* Navigation Links */}
           <div className="flex-1 overflow-y-auto py-6 px-4 space-y-1.5">
             <div className="px-3 mb-2 text-[11px] font-semibold uppercase tracking-wider text-stone-400">
-              Operations & Modules
+              Operations & Management
             </div>
 
             {navItems.map((item) => {
@@ -277,7 +277,17 @@ export default function DashboardLayout({ children }) {
                     </div>
                   </div>
 
-                  <div className="pt-2">
+                  <div className="pt-2 space-y-1">
+                    <button
+                      onClick={() => {
+                        setShowProfileMenu(false);
+                        navigate('/settings');
+                      }}
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-stone-700 hover:bg-stone-50 transition-colors cursor-pointer"
+                    >
+                      <Settings className="w-4 h-4 text-[#8C6D3B]" />
+                      <span>Hotel Settings</span>
+                    </button>
                     <button
                       onClick={handleLogout}
                       className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"

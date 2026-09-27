@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { initialMockData } from '../data/mockData';
+import { initialMockData, initialPayments, initialCheckInLogs, initialCheckOutLogs } from '../data/mockData';
 
 const HotelContext = createContext(null);
 
@@ -213,6 +213,36 @@ export function HotelProvider({ children }) {
     }
   });
 
+  // Payments State (Module 7)
+  const [payments, setPayments] = useState(() => {
+    try {
+      const saved = localStorage.getItem('grand_azure_payments');
+      return saved ? JSON.parse(saved) : initialPayments;
+    } catch {
+      return initialPayments;
+    }
+  });
+
+  // Check-In Logs (Module 6)
+  const [checkInLogs, setCheckInLogs] = useState(() => {
+    try {
+      const saved = localStorage.getItem('grand_azure_checkin_logs');
+      return saved ? JSON.parse(saved) : initialCheckInLogs;
+    } catch {
+      return initialCheckInLogs;
+    }
+  });
+
+  // Check-Out Logs (Module 6)
+  const [checkOutLogs, setCheckOutLogs] = useState(() => {
+    try {
+      const saved = localStorage.getItem('grand_azure_checkout_logs');
+      return saved ? JSON.parse(saved) : initialCheckOutLogs;
+    } catch {
+      return initialCheckOutLogs;
+    }
+  });
+
   // Sync to localStorage
   useEffect(() => {
     localStorage.setItem('grand_azure_rooms', JSON.stringify(rooms));
@@ -225,6 +255,18 @@ export function HotelProvider({ children }) {
   useEffect(() => {
     localStorage.setItem('grand_azure_bookings', JSON.stringify(bookings));
   }, [bookings]);
+
+  useEffect(() => {
+    localStorage.setItem('grand_azure_payments', JSON.stringify(payments));
+  }, [payments]);
+
+  useEffect(() => {
+    localStorage.setItem('grand_azure_checkin_logs', JSON.stringify(checkInLogs));
+  }, [checkInLogs]);
+
+  useEffect(() => {
+    localStorage.setItem('grand_azure_checkout_logs', JSON.stringify(checkOutLogs));
+  }, [checkOutLogs]);
 
   // Integrate Third-Party API (DummyJSON / JSONPlaceholder) via Axios
   const fetchThirdPartyRooms = async () => {
@@ -431,14 +473,153 @@ export function HotelProvider({ children }) {
     toast.success(`Booking ${id} status updated to ${newStatus}.`);
   };
 
-  const cancelBooking = (id) => {
+  // CHECK-IN OPERATION (Module 6)
+  const checkInGuest = (bookingId, meta = {}) => {
+    const booking = bookings.find(b => b.id === bookingId);
+    if (!booking) {
+      toast.error("Booking not found");
+      return { success: false };
+    }
+
+    const keyCard = meta.keyCardNumber || `KEY-${Math.floor(1000 + Math.random() * 9000)}`;
+    const now = new Date();
+    const formattedTime = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    // 1. Update Booking Status
+    setBookings(prev => prev.map(b => b.id === bookingId ? { ...b, status: "Checked In", checkInActual: formattedTime, keyCard } : b));
+
+    // 2. Update Room Status to Occupied
+    setRooms(prev => prev.map(r => r.roomNumber === booking.roomNumber ? { ...r, status: "Occupied" } : r));
+
+    // 3. Log into Check-In History
+    const newLog = {
+      id: `CKIN-${Date.now().toString().slice(-4)}`,
+      bookingId: booking.id,
+      guestName: booking.guestName,
+      guestEmail: booking.guestEmail,
+      roomNumber: booking.roomNumber,
+      roomType: booking.roomType,
+      checkInTime: formattedTime,
+      expectedCheckOut: booking.checkOut,
+      keyCardNumber: keyCard,
+      luggageAssistance: !!meta.luggageAssistance,
+      agent: meta.agent || "Front Desk Staff",
+      notes: meta.notes || "Standard check-in procedure completed."
+    };
+    setCheckInLogs(prev => [newLog, ...prev]);
+
+    toast.success(`Successfully checked in ${booking.guestName} to ${booking.roomNumber}! Card ${keyCard} active.`);
+    return { success: true, log: newLog };
+  };
+
+  // CHECK-OUT OPERATION (Module 6)
+  const checkOutGuest = (bookingId, meta = {}) => {
+    const booking = bookings.find(b => b.id === bookingId);
+    if (!booking) {
+      toast.error("Booking not found");
+      return { success: false };
+    }
+
+    const now = new Date();
+    const formattedTime = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    // 1. Update Booking Status
+    setBookings(prev => prev.map(b => b.id === bookingId ? { ...b, status: "Checked Out", checkOutActual: formattedTime } : b));
+
+    // 2. Update Room Status back to Available
+    setRooms(prev => prev.map(r => r.roomNumber === booking.roomNumber ? { ...r, status: "Available" } : r));
+
+    // 3. Log into Check-Out History
+    const newLog = {
+      id: `CKOUT-${Date.now().toString().slice(-4)}`,
+      bookingId: booking.id,
+      guestName: booking.guestName,
+      roomNumber: booking.roomNumber,
+      roomType: booking.roomType,
+      checkOutTime: formattedTime,
+      stayDuration: `${booking.nights} Nights`,
+      totalPaid: booking.amount,
+      roomCondition: meta.roomCondition || "Cleaned & Inspected",
+      agent: meta.agent || "Front Desk Staff",
+      rating: meta.rating || 5,
+      notes: meta.notes || "Check-out completed, key card returned."
+    };
+    setCheckOutLogs(prev => [newLog, ...prev]);
+
+    // 4. Also ensure any pending payment is settled upon checkout
+    setPayments(prev => prev.map(p => p.bookingId === bookingId ? { ...p, status: "Paid" } : p));
+
+    toast.success(`Checked out ${booking.guestName} from Room ${booking.roomNumber}. Room is now Available!`);
+    return { success: true, log: newLog };
+  };
+
+  // PAYMENTS (Module 7)
+  const recordPayment = (paymentData) => {
+    const invoiceNum = `INV-${new Date().getFullYear()}-${String(payments.length + 1).padStart(3, '0')}`;
+    const newPayment = {
+      id: `PAY-${Date.now().toString().slice(-4)}`,
+      invoiceNo: invoiceNum,
+      bookingId: paymentData.bookingId || `BK-${Math.floor(1000 + Math.random() * 9000)}`,
+      guestName: paymentData.guestName,
+      guestEmail: paymentData.guestEmail || "guest@grandazure.com",
+      roomNumber: paymentData.roomNumber,
+      roomType: paymentData.roomType || "Deluxe Suite",
+      amount: Number(paymentData.amount),
+      status: paymentData.status || "Paid",
+      method: paymentData.method || "Credit Card",
+      date: paymentData.date || new Date().toISOString().split('T')[0],
+      tariff: Number(paymentData.tariff || paymentData.amount * 0.85),
+      tax: Number(paymentData.tax || paymentData.amount * 0.12),
+      serviceFee: Number(paymentData.serviceFee || 50),
+      notes: paymentData.notes || ""
+    };
+
+    setPayments(prev => [newPayment, ...prev]);
+
+    // If matches booking, update booking payment status
+    if (paymentData.bookingId) {
+      setBookings(prev => prev.map(b => b.id === paymentData.bookingId ? { ...b, paymentStatus: newPayment.status } : b));
+    }
+
+    toast.success(`Invoice ${newPayment.invoiceNo} generated. Payment of $${newPayment.amount.toLocaleString()} recorded!`);
+    return { success: true, payment: newPayment };
+  };
+
+  const updatePaymentStatus = (paymentId, newStatus) => {
+    setPayments(prev => prev.map(p => {
+      if (p.id === paymentId) {
+        if (p.bookingId) {
+          setBookings(bPrev => bPrev.map(b => b.id === p.bookingId ? { ...b, paymentStatus: newStatus } : b));
+        }
+        return { ...p, status: newStatus };
+      }
+      return p;
+    }));
+    toast.success(`Payment ${paymentId} marked as ${newStatus}.`);
+  };
+
+  // BOOKING CANCELLATION & COMPLETION (Module 8)
+  const cancelBookingWithReason = (id, reason = "Guest requested cancellation") => {
     const target = bookings.find(b => b.id === id);
     if (target) {
-      setBookings(prev => prev.map(b => b.id === id ? { ...b, status: 'Cancelled' } : b));
+      setBookings(prev => prev.map(b => b.id === id ? { ...b, status: 'Cancelled', cancelReason: reason, cancelledAt: new Date().toISOString() } : b));
       // Release room
       setRooms(rPrev => rPrev.map(r => r.roomNumber === target.roomNumber ? { ...r, status: "Available" } : r));
-      toast.info(`Reservation ${id} has been cancelled.`);
+      // Update payment
+      setPayments(pPrev => pPrev.map(p => p.bookingId === id ? { ...p, status: "Refunded" } : p));
+      toast.info(`Reservation ${id} has been cancelled. Room ${target.roomNumber} is released.`);
+      return { success: true };
     }
+    return { success: false };
+  };
+
+  const cancelBooking = (id) => {
+    return cancelBookingWithReason(id, "Cancelled by user");
+  };
+
+  const completeBooking = (id) => {
+    setBookings(prev => prev.map(b => b.id === id ? { ...b, status: 'Completed' } : b));
+    toast.success(`Reservation ${id} marked as Completed.`);
   };
 
   return (
@@ -465,7 +646,20 @@ export function HotelProvider({ children }) {
         createBooking,
         updateBookingStatus,
         cancelBooking,
-        checkRoomConflict
+        cancelBookingWithReason,
+        completeBooking,
+        checkRoomConflict,
+
+        // Check-In / Check-Out (Module 6)
+        checkInLogs,
+        checkOutLogs,
+        checkInGuest,
+        checkOutGuest,
+
+        // Payments (Module 7)
+        payments,
+        recordPayment,
+        updatePaymentStatus
       }}
     >
       {children}

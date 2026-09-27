@@ -41,10 +41,10 @@ export default function DashboardLayout({ children }) {
     { name: 'Room Management', icon: BedDouble, path: '/rooms' },
     { name: 'Guest Directory', icon: Users, path: '/guests' },
     { name: 'Room Bookings', icon: CalendarCheck, path: '/bookings' },
-    { name: 'Check-In / Out', icon: KeyRound, path: '#', badge: '18 arrivals' },
-    { name: 'Billing & Payments', icon: CreditCard, path: '#' },
-    { name: 'Booking History', icon: History, path: '#' },
-    { name: 'Reports & Insights', icon: BarChart3, path: '#' },
+    { name: 'Check-In / Out', icon: KeyRound, path: '/checkin-checkout', badge: '18 arrivals' },
+    { name: 'Billing & Payments', icon: CreditCard, path: '/payments' },
+    { name: 'Booking History', icon: History, path: '/history' },
+    { name: 'Reports & Insights', icon: BarChart3, path: '/reports' },
     { name: 'Hotel Settings', icon: Settings, path: '#' },
   ];
 

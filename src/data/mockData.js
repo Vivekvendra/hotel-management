@@ -135,3 +135,202 @@ export const initialMockData = {
     { id: 3, title: "High Occupancy Alert", text: "Occupancy rate has surpassed 75% for upcoming weekend", time: "2 hrs ago", type: "alert" },
   ]
 };
+
+export const initialPayments = [
+  {
+    id: "PAY-901",
+    invoiceNo: "INV-2026-001",
+    bookingId: "BK-8901",
+    guestName: "Lady Sophia Montgomery",
+    guestEmail: "sophia.m@monterey.co.uk",
+    roomNumber: "PH-401",
+    roomType: "Presidential Suite",
+    amount: 4250,
+    status: "Paid",
+    method: "Credit Card (Amex)",
+    date: "2026-09-24",
+    tariff: 3750,
+    tax: 450,
+    serviceFee: 50
+  },
+  {
+    id: "PAY-902",
+    invoiceNo: "INV-2026-002",
+    bookingId: "BK-8902",
+    guestName: "David Sterling",
+    guestEmail: "d.sterling@vanguard.io",
+    roomNumber: "OV-104",
+    roomType: "Ocean Villa",
+    amount: 2600,
+    status: "Paid",
+    method: "Apple Pay",
+    date: "2026-09-23",
+    tariff: 2275,
+    tax: 275,
+    serviceFee: 50
+  },
+  {
+    id: "PAY-903",
+    invoiceNo: "INV-2026-003",
+    bookingId: "BK-8903",
+    guestName: "Elena Rostova",
+    guestEmail: "elena.rostova@aurora.de",
+    roomNumber: "DX-210",
+    roomType: "Deluxe Suite",
+    amount: 980,
+    status: "Paid",
+    method: "Bank Transfer",
+    date: "2026-09-21",
+    tariff: 830,
+    tax: 100,
+    serviceFee: 50
+  },
+  {
+    id: "PAY-904",
+    invoiceNo: "INV-2026-004",
+    bookingId: "BK-8904",
+    guestName: "Marcus Vance",
+    guestEmail: "marcus.vance@techcorp.com",
+    roomNumber: "EX-315",
+    roomType: "Executive Room",
+    amount: 1450,
+    status: "Pending",
+    method: "Credit Card (Visa)",
+    date: "2026-09-24",
+    tariff: 1250,
+    tax: 150,
+    serviceFee: 50
+  },
+  {
+    id: "PAY-905",
+    invoiceNo: "INV-2026-005",
+    bookingId: "BK-8905",
+    guestName: "Isabella Cruz",
+    guestEmail: "isabella.cruz@cruzdesign.es",
+    roomNumber: "OV-108",
+    roomType: "Ocean Villa",
+    amount: 3250,
+    status: "Paid",
+    method: "Mastercard",
+    date: "2026-09-23",
+    tariff: 2855,
+    tax: 345,
+    serviceFee: 50
+  },
+  {
+    id: "PAY-906",
+    invoiceNo: "INV-2026-006",
+    bookingId: "BK-8906",
+    guestName: "Arthur Pendelton",
+    guestEmail: "arthur@pendelton-holdings.com",
+    roomNumber: "PH-402",
+    roomType: "Presidential Suite",
+    amount: 5100,
+    status: "Paid",
+    method: "Wire Transfer",
+    date: "2026-09-24",
+    tariff: 4510,
+    tax: 540,
+    serviceFee: 50
+  },
+  {
+    id: "PAY-907",
+    invoiceNo: "INV-2026-007",
+    bookingId: "BK-8907",
+    guestName: "Claire Dupont",
+    guestEmail: "claire.dupont@atelier.fr",
+    roomNumber: "DX-212",
+    roomType: "Deluxe Suite",
+    amount: 1470,
+    status: "Paid",
+    method: "Apple Pay",
+    date: "2026-09-23",
+    tariff: 1265,
+    tax: 155,
+    serviceFee: 50
+  },
+  {
+    id: "PAY-908",
+    invoiceNo: "INV-2026-008",
+    bookingId: "BK-8900",
+    guestName: "Julian Moreau",
+    guestEmail: "julian.m@artisan.fr",
+    roomNumber: "EX-312",
+    roomType: "Executive Room",
+    amount: 870,
+    status: "Refunded",
+    method: "Credit Card",
+    date: "2026-09-20",
+    tariff: 730,
+    tax: 90,
+    serviceFee: 50
+  }
+];
+
+export const initialCheckInLogs = [
+  {
+    id: "CKIN-101",
+    bookingId: "BK-8902",
+    guestName: "David Sterling",
+    roomNumber: "OV-104",
+    roomType: "Ocean Villa",
+    checkInTime: "2026-09-23 14:15",
+    expectedCheckOut: "2026-09-27",
+    keyCardNumber: "KEY-8821",
+    luggageAssistance: true,
+    agent: "Front Desk Manager"
+  },
+  {
+    id: "CKIN-102",
+    bookingId: "BK-8905",
+    guestName: "Isabella Cruz",
+    roomNumber: "OV-108",
+    roomType: "Ocean Villa",
+    checkInTime: "2026-09-23 15:30",
+    expectedCheckOut: "2026-09-28",
+    keyCardNumber: "KEY-4490",
+    luggageAssistance: true,
+    agent: "Front Desk Staff"
+  },
+  {
+    id: "CKIN-103",
+    bookingId: "BK-8907",
+    guestName: "Claire Dupont",
+    roomNumber: "DX-212",
+    roomType: "Deluxe Suite",
+    checkInTime: "2026-09-23 16:45",
+    expectedCheckOut: "2026-09-26",
+    keyCardNumber: "KEY-1205",
+    luggageAssistance: false,
+    agent: "Concierge"
+  }
+];
+
+export const initialCheckOutLogs = [
+  {
+    id: "CKOUT-201",
+    bookingId: "BK-8903",
+    guestName: "Elena Rostova",
+    roomNumber: "DX-210",
+    roomType: "Deluxe Suite",
+    checkOutTime: "2026-09-23 11:00",
+    stayDuration: "2 Nights",
+    totalPaid: 980,
+    roomCondition: "Excellent",
+    agent: "Front Desk Staff",
+    rating: 5
+  },
+  {
+    id: "CKOUT-202",
+    bookingId: "BK-8898",
+    guestName: "Robert Chen",
+    roomNumber: "EX-310",
+    roomType: "Executive Room",
+    checkOutTime: "2026-09-22 10:30",
+    stayDuration: "3 Nights",
+    totalPaid: 1140,
+    roomCondition: "Good",
+    agent: "Front Desk Staff",
+    rating: 4
+  }
+];

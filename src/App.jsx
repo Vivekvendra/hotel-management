@@ -13,6 +13,10 @@ import Dashboard from './pages/dashboard/Dashboard';
 import RoomManagement from './pages/rooms/RoomManagement';
 import GuestManagement from './pages/guests/GuestManagement';
 import BookingManagement from './pages/bookings/BookingManagement';
+import CheckInOut from './pages/checkin/CheckInOut';
+import Payments from './pages/payments/Payments';
+import BookingHistory from './pages/history/BookingHistory';
+import Reports from './pages/reports/Reports';
 
 export default function App() {
   return (
@@ -67,6 +71,54 @@ export default function App() {
                 <ProtectedRoute>
                   <DashboardLayout>
                     <BookingManagement />
+                  </DashboardLayout>
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Protected Front Desk Check-In / Check-Out (Module 6) */}
+            <Route
+              path="/checkin-checkout"
+              element={
+                <ProtectedRoute>
+                  <DashboardLayout>
+                    <CheckInOut />
+                  </DashboardLayout>
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Protected Billing & Payments (Module 7) */}
+            <Route
+              path="/payments"
+              element={
+                <ProtectedRoute>
+                  <DashboardLayout>
+                    <Payments />
+                  </DashboardLayout>
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Protected Booking History (Module 8) */}
+            <Route
+              path="/history"
+              element={
+                <ProtectedRoute>
+                  <DashboardLayout>
+                    <BookingHistory />
+                  </DashboardLayout>
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Protected Reports & Analytics (Module 9) */}
+            <Route
+              path="/reports"
+              element={
+                <ProtectedRoute>
+                  <DashboardLayout>
+                    <Reports />
                   </DashboardLayout>
                 </ProtectedRoute>
               }
